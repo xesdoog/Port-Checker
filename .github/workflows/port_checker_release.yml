@@ -36,7 +36,7 @@ jobs:
 
     - name: Build Executable
       run: |
-        pyinstaller "port_checker_gui.py" -n "Port Checker" --noconfirm --onefile --windowed --noconsole --icon "./assets/icon_1.ico" --splash "./assets/splash.png" --add-data "./assets/;assets/" --version-file "./version.txt"
+        pyinstaller "port_checker_gui.py" -n "PortChecker" --noconfirm --onefile --windowed --noconsole --icon "./assets/icon_1.ico" --splash "./assets/splash.png" --add-data "./assets/;assets/" --version-file "./version.txt"
 
     - name: Generate Build Info
       id: var
@@ -49,7 +49,7 @@ jobs:
       with:
         name: binary
         path: |
-          'dist\Port Checker.exe'
+          dist\PortChecker.exe
 
   create_release:
     runs-on: ubuntu-latest
@@ -125,14 +125,14 @@ jobs:
       - name: Echo build_sha256
         id: build_sha
         run: |
-          sha256sum ymu.exe > sha256.checksum
+          sha256sum PortChecker.exe > sha256.checksum
           echo "build_sha=$(cat sha256.checksum)" >> $GITHUB_OUTPUT
           cat sha256.checksum
 
       - name: Upload Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Port Checker ${{ steps.increment_version.outputs.new_version }}
+          name: PortChecker ${{ steps.increment_version.outputs.new_version }}
           tag_name: ${{ steps.increment_version.outputs.new_version }}
           body: |
               >[!NOTE]
@@ -141,4 +141,4 @@ jobs:
               >| ------------- |
 
           files: |
-            'Port Checker.exe'
+            PortChecker.exe
